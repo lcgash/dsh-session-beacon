@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Session beacons",
+    "description": "Adds a fixed session-status icon in the title-adjacent header action seat, immediately after the Session title. The icon uses a single color for the highest-priority state: amber when a session needs human confirmation, green when a session just completed, blue while a session is running, and gray when only idle sessions remain. Hover the icon to open a floating badge bar just below the header; it lists active sessions with status-colored dots and the idle count, and collapses about three seconds after the pointer leaves. Click a badge to open that session; click the icon or the bar's beacon button to open All sessions with every listed session, status, and last-update time. The icon is part of the header layout and never overlays the title or window controls. It reads only the existing session list and status, makes no model requests, stores no session data, and changes nothing on the Host.",
+    "detail": "docs/DETAIL.md"
+  }
+}

@@ -1,0 +1,5 @@
+# dsh-session-beacon bundle patch: inserts one client-only plugin row.
+# The Host half is an intentional no-op; all behavior lives in client.js.
+- insert:
+    - id: session-beacon
+      name: 'dsh-session-beacon'
