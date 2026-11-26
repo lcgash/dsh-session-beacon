@@ -242,7 +242,16 @@ window.__ModuleLoader__.load({
   border-color: color-mix(in srgb, var(--dsw-alias-state-success-primary) 22%, transparent);
 }
 .dsb-badge[data-current='1'] {
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--dsw-alias-state-business-primary) 55%, transparent);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--dsw-alias-state-business-primary) 65%, transparent);
+}
+.dsb-currentTag {
+  flex: none;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--dsw-alias-state-business-primary) 14%, transparent);
+  font-size: 9px;
+  line-height: 13px;
+  color: var(--dsw-alias-label-secondary);
 }
 .dsb-dot {
   flex: none;
@@ -777,8 +786,13 @@ window.__ModuleLoader__.load({
 
       const activeRows = rows.filter(row => row.kind !== 'idle')
       const idleRows = rows.filter(row => row.kind === 'idle')
-      const visibleRows = activeRows.slice(0, 6)
-      const hiddenActive = activeRows.length - visibleRows.length
+      const currentRow = rows.find(row => row.current)
+      const barRows = [
+        ...(currentRow === undefined ? [] : [currentRow]),
+        ...activeRows.filter(row => !row.current),
+      ]
+      const visibleRows = barRows.slice(0, 6)
+      const hiddenActive = barRows.length - visibleRows.length
 
       React.useEffect(() => {
         const timer = setInterval(() => setNow(Date.now()), 30_000)
@@ -873,19 +887,22 @@ window.__ModuleLoader__.load({
           h('div', { className: 'dsb-badges' },
             visibleRows.map(row => h('button', {
               type: 'button', key: row.id, className: 'dsb-badge', 'data-kind': row.kind,
-              title: `${row.title} · ${statusLabel(row, t)}`,
-              'aria-label': `${t('openNamed', { title: row.title })}, ${statusLabel(row, t)}`,
+              'data-current': row.current ? '1' : '0',
+              'aria-current': row.current ? 'true' : undefined,
+              title: `${row.title} · ${statusLabel(row, t)}${row.current ? ` · ${t('current')}` : ''}`,
+              'aria-label': `${t('openNamed', { title: row.title })}, ${statusLabel(row, t)}${row.current ? `, ${t('current')}` : ''}`,
               onClick: () => open(row.id),
             },
               h('span', { className: 'dsb-dot', 'data-kind': row.kind, 'aria-hidden': 'true' }),
-              h('span', { className: 'dsb-title' }, row.title)))),
+              h('span', { className: 'dsb-title' }, row.title),
+              row.current ? h('span', { className: 'dsb-currentTag' }, t('current')) : null))),
           hiddenActive > 0
             ? h('button', { type: 'button', className: 'dsb-chip', title: t('allSessions'), onClick: togglePanel }, `+${hiddenActive}`)
             : null,
-          idleRows.length > 0
+          idleRows.filter(row => !row.current).length > 0
             ? h('button', { type: 'button', className: 'dsb-chip', title: t('allSessions'), onClick: togglePanel },
               h('span', { className: 'dsb-dot', 'data-kind': 'idle', 'aria-hidden': 'true' }),
-              String(idleRows.length))
+              String(idleRows.filter(row => !row.current).length))
             : null)
         : null
 

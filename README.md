@@ -32,7 +32,7 @@ A running icon also carries a soft blue pulsing halo. The icon never displays a 
 
 ## Interaction
 
-- **Hover the icon**: the floating bar appears directly below the header, aligned with the icon. It lists active Sessions as colored dot + title badges, plus an idle count chip. The bar closes about three seconds after the pointer leaves the icon and bar. It stays open while the pointer is over it or while the All sessions panel is open.
+- **Hover the icon**: the floating bar appears directly below the header, aligned with the icon. The current Session is pinned first and carries a Current ring and tag; other active Sessions follow as colored dot + title badges, plus an idle count chip. The bar closes about three seconds after the pointer leaves the icon and bar. It stays open while the pointer is over it or while the All sessions panel is open.
 - **Click a badge in the bar**: opens that Session and closes the bar.
 - **Click the icon or the beacon button in the bar**: opens the All sessions panel. Click a row to open its Session; click outside or press Escape to close.
 - **Hover the icon while the panel is open**: the panel stays open and the floating bar remains available above it, so you can still switch Sessions from either surface.
